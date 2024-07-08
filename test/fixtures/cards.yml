@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  card_name: MyString
+  card_supertype: MyString
+  card_subtypes: MyString
+  card_set: MyString
+  card_rarity: MyString
+  card_image: MyString
+  set: one
+  item: one
+
+two:
+  card_name: MyString
+  card_supertype: MyString
+  card_subtypes: MyString
+  card_set: MyString
+  card_rarity: MyString
+  card_image: MyString
+  set: two
+  item: two

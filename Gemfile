@@ -4,6 +4,7 @@ ruby "3.3.0"
 
 gem 'httparty'
 gem 'kaminari'
+gem 'dotenv-rails', groups: [:development, :test]
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"

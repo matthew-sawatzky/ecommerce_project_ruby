@@ -1,12 +1,18 @@
 class CardsController < ApplicationController
   def index
     api = PokemonTcgApi.new(ENV['POKEMON_TCG_API_KEY'])
-    response = api.fetch_cards
+    if params[:set_id].present?
+      set = Set.find(params[:set_id])
+      response = api.fetch_cards_by_set(set.api_id)
+    else
+      response = api.fetch_cards
+    end
 
     if response.success?
-      @cards = response['data']
+      all_cards = response['data']
+      @cards = Kaminari.paginate_array(all_cards).page(params[:page]).per(20)
     else
-      @cards = []
+      @cards = Kaminari.paginate_array([]).page(params[:page]).per(20)
       flash[:alert] = "Failed to fetch cards from the Pokemon TCG API."
     end
   end

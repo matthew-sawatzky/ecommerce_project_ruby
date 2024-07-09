@@ -1,0 +1,16 @@
+<% if @cards.any? %>
+  <div class="cards">
+    <% @cards.each do |card| %>
+      <div class="card">
+      <h2><%= card['name'] %></h2>
+        <% if card['images'] %>
+          <%= image_tag card['images']['small'], alt: card['name'] %>
+        <% end %>
+        <p><%= link_to 'Details', card_path(card['id']) %></p>
+      </div>
+    <% end %>
+  </div>
+  <%= paginate @cards %>
+<% else %>
+  <p>No cards found.</p>
+<% end %>

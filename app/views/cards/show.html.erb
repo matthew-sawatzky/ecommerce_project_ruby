@@ -1,0 +1,12 @@
+<h1><%= @card['name'] %></h1>
+
+<% if @card['images'] %>
+  <%= image_tag @card['images']['large'] %>
+<% end %>
+
+<p><strong>Supertype:</strong> <%= @card['supertype'] %></p>
+<p><strong>Subtypes:</strong> <%= @card['subtypes'].join(', ') %></p>
+<p><strong>Set:</strong> <%= @card['set']['name'] %></p>
+<p><strong>Rarity:</strong> <%= @card['rarity'] %></p>
+
+<%= link_to 'Back to cards', cards_path %>

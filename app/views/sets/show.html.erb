@@ -1,0 +1,13 @@
+<h1><%= @set.name %></h1>
+
+<h2>Cards in this set:</h2>
+<div class="cards">
+  <% @cards.each do |card| %>
+    <div class="card">
+      <h3><%= card['name'] %></h3>
+      <% if card['images'] %>
+        <%= image_tag card['images']['small'], alt: card['name'] %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

@@ -1,34 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>PokemonCardShop</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>PokemonStore</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+</head>
 
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <li><%= link_to 'Home', root_path %></li>
-          <li><%= link_to 'Cards', cards_path %></li>
-          <li><%= link_to 'About', about_path %></li>
-          <li>
-            <%= form_with url: sets_path, method: :get, local: true do |form| %>
-              <div>
-                <%= form.label :set, "Select Set" %>
-                <%= form.collection_select :set_id, @sets, :id, :set_name, prompt: "All Sets" %>
-                <%= form.submit "Go" %>
-              </div>
-            <% end %>
-          </li>
-        </ul>
-      </nav>
-    </header>
-
-    <%= yield %>
-  </body>
+<body>
+<h1>Pokemon Cards</h1>
+  <nav>
+    <ul>
+      <li><%= link_to 'Cards', cards_path %></li>
+      <li><%= link_to 'About', about_path %></li>
+      <!-- Remove the form for card sets selection -->
+    </ul>
+  </nav>
+  <%= yield %>
+</body>
 </html>

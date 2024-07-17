@@ -2,7 +2,7 @@ class CardsController < ApplicationController
   def index
     api = PokemonTcgApi.new(ENV['POKEMON_TCG_API_KEY'])
     if params[:set_id].present?
-      set = Set.find(params[:set_id])
+      set = CardSet.find(params[:set_id])
       response = api.fetch_cards_by_set(set.api_id)
     else
       response = api.fetch_cards
@@ -27,5 +27,15 @@ class CardsController < ApplicationController
       @card = nil
       flash[:alert] = "Failed to fetch the card from the Pokemon TCG API."
     end
+  end
+
+  def search
+    @query = params[:query]
+    @cards = if @query.present?
+               Card.where('name LIKE ?', "%#{@query}%")
+             else
+               Card.all
+             end
+    render :index
   end
 end

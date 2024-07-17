@@ -1,9 +1,9 @@
 class Card < ApplicationRecord
-  belongs_to :set
-  belongs_to :item
-  belongs_to :set, foreign_key: 'set_id', primary_key: 'api_id'
+  belongs_to :card_set, foreign_key: 'set_id'
+  belongs_to :item, optional: true
 
   has_many :items
   has_many :orders, through: :items
-  
+
+  validates :card_name, presence: true, uniqueness: true
 end

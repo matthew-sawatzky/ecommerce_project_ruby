@@ -1,0 +1,17 @@
+<h1>Search Results</h1>
+
+<%= form_with url: search_cards_path, method: :get, local: true do |form| %>
+  <%= form.label :query, "Search Cards" %>
+  <%= form.text_field :query %>
+  <%= form.submit "Search" %>
+<% end %>
+
+<% if @cards.any? %>
+  <ul>
+    <% @cards.each do |card| %>
+      <li><%= link_to card.name, card_path(card) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No cards found.</p>
+<% end %>

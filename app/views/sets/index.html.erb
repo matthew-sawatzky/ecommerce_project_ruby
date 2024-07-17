@@ -3,7 +3,7 @@
 <%= link_to 'Populate Sets', sets_populate_path, method: :post %>
 
 <ul>
-  <% @sets.each do |set| %>
+  <% @CardSets.each do |set| %>
     <li><%= link_to set.name, set_path(set) %></li>
   <% end %>
 </ul>

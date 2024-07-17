@@ -1,4 +1,8 @@
 class User < ApplicationRecord
-  belongs_to :province
-  has_many :orders
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  def admin?
+    self.admin
+  end
 end

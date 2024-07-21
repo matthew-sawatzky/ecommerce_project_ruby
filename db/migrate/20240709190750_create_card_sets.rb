@@ -1,8 +1,8 @@
-class CreateCardSets < ActiveRecord::Migration[6.0]
+class CreateCardSets < ActiveRecord::Migration[6.1]
   def change
     create_table :card_sets do |t|
-      t.string :set_name, null: false, unique: true
-      t.string :set_series, null: false
+      t.string :name
+      t.string :series
 
       t.timestamps
     end

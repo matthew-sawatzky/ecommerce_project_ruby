@@ -1,11 +1,11 @@
-class CreateCards < ActiveRecord::Migration[6.0]
+class CreateCards < ActiveRecord::Migration[6.1]
   def change
     create_table :cards do |t|
       t.string :name
-      t.text :description
-      t.string :card_type
+      t.string :supertype
+      t.string :subtype
       t.string :rarity
-      t.string :set_name
+      t.references :card_set, null: false, foreign_key: true
 
       t.timestamps
     end

@@ -1,5 +1,5 @@
 # app/models/card_set.rb
 class CardSet < ApplicationRecord
-  validates :set_name, presence: true, uniqueness: true
-  validates :set_series, presence: true
+  validates :name, presence: true, uniqueness: true
+  validates :series, presence: true
 end

@@ -14,7 +14,7 @@
 <%= form_with url: card_set_path(:id), method: :get, local: true do |form| %>
   <div>
     <%= form.label :set_id, "Select Set" %>
-    <%= form.collection_select :id, CardSet.all, :id, :set_name, prompt: "Pokémon Sets" %>
+    <%= form.collection_select :id, CardSet.all, :id, :name, prompt: "Pokémon Sets" %>
     <%= form.submit "Go" %>
   </div>
 <% end %>

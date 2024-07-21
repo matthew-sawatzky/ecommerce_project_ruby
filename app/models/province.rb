@@ -5,5 +5,5 @@ class Province < ApplicationRecord
   validates :tax_type, presence: true
 
   # Optional: Validation for specific tax types
-  validates :tax_type, inclusion: { in: %w(pst hst gst), message: "%{value} is not a valid tax type" }
+  validates :tax_type, inclusion: { in: %w(pst hst gst qst), message: "%{value} is not a valid tax type" }
 end

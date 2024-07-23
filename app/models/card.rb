@@ -5,7 +5,7 @@ class Card < ApplicationRecord
   has_many :items
   has_many :orders, through: :items
 
-    has_one_attached :image
+  has_one_attached :image
 
   validates :name, presence: true, uniqueness: true
 end

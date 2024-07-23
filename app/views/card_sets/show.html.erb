@@ -1,8 +1,8 @@
-<h1><%= @CardSets.name %></h1>
+<h1><%= @card_set['name'] %></h1>
 
-<h2>Cards in this set:</h2>
+<h2>'Cards in this set:'</h2>
 <div class="cards">
-  <% @CardSets.each do |card| %>
+  <% @card_set['cards'].each do |card| %>
     <div class="card">
       <h3><%= card['name'] %></h3>
       <% if card['images'] %>

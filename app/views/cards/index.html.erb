@@ -2,11 +2,17 @@
   <div class="cards">
     <% @cards.each do |card| %>
       <div class="card">
-      <h2><%= card['name'] %></h2>
-        <% if card['images'] %>
-          <%= image_tag card['images']['small'], alt: card['name'] %>
+        <h2><%= card.name %></h2>
+        
+        <% if card.image.attached? %>
+          <%= image_tag url_for(card.image), alt: card.name %>
+        <% else %>
+          <% if card['images'] %>
+            <%= image_tag card['images']['small'], alt: card.name %>
+          <% end %>
         <% end %>
-        <p><%= link_to 'Details', card_path(card['id']) %></p>
+        
+        <p><%= link_to 'Details', card_path(card) %></p>
       </div>
     <% end %>
   </div>

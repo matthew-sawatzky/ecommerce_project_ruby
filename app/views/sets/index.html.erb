@@ -1,9 +1,0 @@
-<h1>Pokemon Card Sets</h1>
-
-<%= link_to 'Populate Sets', sets_populate_path, method: :post %>
-
-<ul>
-  <% @CardSets.each do |set| %>
-    <li><%= link_to set.name, set_path(set) %></li>
-  <% end %>
-</ul>

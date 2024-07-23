@@ -1,3 +1,5 @@
+require 'open-uri'
+
 api = PokemonTcgApi.new(ENV['POKEMON_TCG_API_KEY'])
 response = api.fetch_cards
 
@@ -14,13 +16,20 @@ if response.success?
   all_cards.each do |card_data|
     card_set = CardSet.find_by(name: card_data['set']['name'])
 
-    Card.create(
+    card = Card.create(
       name: card_data['name'],
       supertype: card_data['supertype'],
       subtype: card_data['subtypes'].join(', '), # assuming subtypes is an array
       rarity: card_data['rarity'],
       card_set: card_set
     )
+
+    # Attach image if available
+    if card_data['images'] && card_data['images']['large']
+      image_url = card_data['images']['large']
+      downloaded_image = URI.open(image_url)
+      card.image.attach(io: downloaded_image, filename: "#{card_data['name']}.jpg")
+    end
   end
 end
 

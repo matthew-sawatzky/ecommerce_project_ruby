@@ -1,29 +1,24 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  
+
   devise_for :users
   root "pages#home"
   get 'pages/about'
-    get 'about', to: 'pages#about'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  resources :cards, only: [:index, :show]
-  resources :cardsets, only: [:index, :show]
-  resources :card_sets, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  # other routes
+  get 'about', to: 'pages#about'
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-        get 'cardsetHandler', to: 'cards#cardset', as: :cardsethandler  
-
-
-      resources :cards, only: [:index, :show, :search] do
+  resources :cards, only: [:index, :show, :search] do
     collection do
       get 'search'
     end
   end
-  # Defines the root path route ("/")
-  # root "posts#index"
 
+  resources :card_sets, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    collection do
+      post 'populate'
+      post 'select', to: 'card_sets#select'  # Add this route
+    end
+  end
+
+  get "up" => "rails/health#show", as: :rails_health_check
 end

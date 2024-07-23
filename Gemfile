@@ -8,6 +8,9 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'will_paginate', '~> 3.3.0'
 gem 'activeadmin', '~> 3.0'
 gem 'devise'
+gem 'chartkick'
+gem 'groupdate'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"

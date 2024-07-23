@@ -1,46 +1,21 @@
+# app/controllers/card_sets_controller.rb
 class CardSetsController < ApplicationController
   def index
-    api = PokemonTcgApi.new(ENV['POKEMON_TCG_API_KEY'])
-    response = api.fetch_sets
+    @card_sets = CardSet.all
 
-    if response.success?
-      @card_sets = response['data']
-    else
-      @card_sets = []
-      flash[:alert] = "Failed to fetch the sets from the Pokemon TCG API."
+    if @card_sets.empty?
+      flash[:alert] = "No card sets available. Please run the seed script to populate the card sets."
     end
   end
 
   def show
-    api = PokemonTcgApi.new(ENV['POKEMON_TCG_API_KEY'])
-    response = api.fetch_card(params[:id]) # Update if necessary
+    @card_set = CardSet.find(params[:id])
+    @cards = @card_set.cards
 
-    if response.success?
-      @card_set = response['data']
-    else
-      @card_set = nil
-      flash[:alert] = "Failed to fetch the set from the Pokemon TCG API."
+    if @card_set.nil?
+      flash[:alert] = "Failed to fetch the set."
       redirect_to card_sets_path
     end
-  end
-
-  def populate
-    api = PokemonTcgApi.new(ENV['POKEMON_TCG_API_KEY'])
-    response = api.fetch_sets
-
-    if response.success?
-      @card_sets = response['data']
-      flash[:notice] = "Card sets successfully populated."
-      render :index
-    else
-      flash[:alert] = "Failed to fetch the sets from the Pokemon TCG API."
-      redirect_to card_sets_path
-    end
-  end
-
-  def select
-    selected_id = params[:id]
-    redirect_to card_set_path(selected_id)  # Redirect to the show page of the selected card set
   end
 
   def new
@@ -78,6 +53,6 @@ class CardSetsController < ApplicationController
   private
 
   def card_set_params
-    params.require(:card_set).permit(:set_name, :set_series)
+    params.require(:card_set).permit(:name, :series)
   end
 end

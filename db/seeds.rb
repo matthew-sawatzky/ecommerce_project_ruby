@@ -1,36 +1,47 @@
+# db/seeds.rb
 require 'open-uri'
 
 api = PokemonTcgApi.new(ENV['POKEMON_TCG_API_KEY'])
-response = api.fetch_cards
+response = api.fetch_sets
 
 if response.success?
-  all_cards = response['data']
+  all_card_sets = response['data']
 
   # Create Card Sets first
-  all_card_sets = all_cards.map { |card_data| card_data['set'] }.uniq
   all_card_sets.each do |set_data|
     CardSet.find_or_create_by(name: set_data['name'], series: set_data['series'])
   end
 
-  # Create Cards
-  all_cards.each do |card_data|
-    card_set = CardSet.find_by(name: card_data['set']['name'])
+  # Fetch cards for each set and create them
+  all_card_sets.each do |set_data|
+    set_id = set_data['id']
+    card_response = api.fetch_cards_by_set(set_id)
 
-    card = Card.create(
-      name: card_data['name'],
-      supertype: card_data['supertype'],
-      subtype: card_data['subtypes'].join(', '), # assuming subtypes is an array
-      rarity: card_data['rarity'],
-      card_set: card_set
-    )
+    if card_response.success?
+      cards = card_response['data']
 
-    # Attach image if available
-    if card_data['images'] && card_data['images']['large']
-      image_url = card_data['images']['large']
-      downloaded_image = URI.open(image_url)
-      card.image.attach(io: downloaded_image, filename: "#{card_data['name']}.jpg")
+      cards.each do |card_data|
+        card_set = CardSet.find_by(name: set_data['name'])
+
+        card = Card.create(
+          name: card_data['name'],
+          supertype: card_data['supertype'],
+          subtype: card_data['subtypes'].join(', '), # assuming subtypes is an array
+          rarity: card_data['rarity'],
+          card_set: card_set
+        )
+
+        # Attach image if available
+        if card_data['images'] && card_data['images']['large']
+          image_url = card_data['images']['large']
+          downloaded_image = URI.open(image_url)
+          card.image.attach(io: downloaded_image, filename: "#{card_data['name']}.jpg")
+        end
+      end
     end
   end
+else
+  puts "Failed to fetch the sets from the Pokemon TCG API."
 end
 
 # Seed admin user

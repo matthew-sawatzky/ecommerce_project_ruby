@@ -1,9 +1,17 @@
-<h1>Pokemon Card Sets</h1>
+<% if @card_set %>
+  <h1><%= @card_set['name'] %></h1>
 
-<%= link_to 'Populate Sets', populate_card_sets_path, method: :post %>
-
-<ul>
-  <% @card_sets.each do |set| %>
-    <li><%= set['name'] %></li>
-  <% end %>
-</ul>
+  <h2>Cards in this set:</h2>
+  <div class="cards">
+    <% @card_set['cards'].each do |card| %>
+      <div class="card">
+        <h3><%= card['name'] %></h3>
+        <% if card['images'] %>
+          <%= image_tag card['images']['small'], alt: card['name'] %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>No card set found.</p>
+<% end %>

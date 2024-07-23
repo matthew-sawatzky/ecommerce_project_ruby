@@ -6,7 +6,6 @@ ActiveAdmin.setup do |config|
   #
   config.site_title = "Ecommerce Project"
 
-  config.paginate = true
     config.root_to = 'dashboard#index'
 
   # Set the link url for the title. For example, to take

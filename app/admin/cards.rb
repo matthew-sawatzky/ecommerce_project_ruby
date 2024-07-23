@@ -1,30 +1,30 @@
 ActiveAdmin.register Card do
-  # See permitted parameters documentation:
-  # https://activeadmin.info/customizing-strong-parameters.html
+  permit_params :name, :name, :series, :description, :card_set_id
 
-  # Permit parameters for form fields
-  permit_params :name, :set_name, :set_series, :description, :image_url
-  
-  # Index page configuration
-  index do
+  filter :name
+  filter :name
+  filter :series
+  filter :description
+  filter :card_set
+
+    index do
     selectable_column
     id_column
     column :name
-    column :set_name
-    column :set_series
+    column :name
+    column :series
     column :description
-    column :image_url
+    column :card_set
     actions
   end
 
-  # Form configuration
   form do |f|
-    f.inputs 'Details' do
+    f.inputs 'Card Details' do
       f.input :name
-      f.input :set_name
-      f.input :set_series
-      f.input :description
-      f.input :image_url
+      f.input :supertype
+      f.input :subtype
+      f.input :rarity
+      f.input :card_set, as: :select, collection: CardSet.all
     end
     f.actions
   end

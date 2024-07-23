@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_23_143534) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_23_223849) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -92,6 +92,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_143534) do
     t.integer "card_set_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "price"
     t.index ["card_set_id"], name: "index_cards_on_card_set_id"
   end
 

@@ -20,6 +20,7 @@
 <% end %>
 
 
+
 <%= form_with url: search_cards_path, method: :get, local: true do |form| %>
   <%= form.label :query, "Search Cards" %>
   <%= form.text_field :query %>

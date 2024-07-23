@@ -1,3 +1,4 @@
+# config/routes.rb
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -15,14 +16,8 @@ Rails.application.routes.draw do
 
   resources :card_sets, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     collection do
-      post 'populate'
-      post 'select', to: 'card_sets#select'
+      post 'select'
     end
-  end
-
-  resource :cart, only: [:show] do
-    post 'add', on: :collection
-    post 'checkout', on: :collection
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

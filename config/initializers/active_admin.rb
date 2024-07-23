@@ -5,7 +5,7 @@ ActiveAdmin.setup do |config|
   # for each of the active admin pages.
   #
   config.site_title = "Ecommerce Project"
-
+  config.batch_actions = true
     config.root_to = 'dashboard#index'
 
   # Set the link url for the title. For example, to take

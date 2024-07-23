@@ -50,6 +50,11 @@ class CardSetsController < ApplicationController
     redirect_to card_sets_url, notice: 'CardSet was successfully destroyed.'
   end
 
+  def select
+    selected_id = params[:id]
+    redirect_to card_set_path(selected_id)  # Redirect to the show page of the selected card set
+  end
+
   private
 
   def card_set_params

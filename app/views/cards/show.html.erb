@@ -8,5 +8,5 @@
 <p><strong>Subtypes:</strong> <%= @card['subtype'] %></p>
 <p><strong>Set:</strong> <%= @card['name'] %></p>
 <p><strong>Rarity:</strong> <%= @card['rarity'] %></p>
+<p><strong>Price:</strong> $<%= @card['price'] %></p>
 
-<%= button_to 'Add to Cart', add_cart_path(card_id: @card.id, quantity: 1), method: :post %>

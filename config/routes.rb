@@ -1,5 +1,6 @@
 # config/routes.rb
 Rails.application.routes.draw do
+  get 'static_pages/show'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -7,6 +8,9 @@ Rails.application.routes.draw do
   root "pages#home"
   get 'pages/about'
   get 'about', to: 'pages#about'
+  post 'cards/add_to_cart/:id', to: 'cards#add_to_cart', as: 'add_to_cart'
+  delete 'cards/remove_from_cart/:id', to: 'cards#remove_from_cart', as: 'remove_from_cart'
+resources :static_pages, only: [:show]
 
   resources :cards, only: [:index, :show, :search] do
     collection do

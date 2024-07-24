@@ -1,5 +1,8 @@
 class CardsController < ApplicationController
+  before_action :initialize_session
+  before_action :load_cart
   def index
+    
     if params[:card_set_id].present?
       card_set = CardSet.find(params[:card_set_id])
       @cards = Kaminari.paginate_array(card_set.cards).page(params[:page]).per(20)
@@ -13,6 +16,26 @@ class CardsController < ApplicationController
     end
   end
 
+def add_to_cart
+  id = params[:id].to_i
+  session[:cart] << id unless session[:cart].include?(id)
+  redirect_to root_path
+end
+
+def remove_from_cart
+  id = params[:id].to_i
+  session[:cart].delete(id)
+  redirect_to root_path
+end
+
+  def initialize_session
+    session[:cart] ||= []
+  end
+
+  def load_cart
+    @cart = Card.find(session[:cart])
+  end
+
   def show
     @card = Card.find(params[:id])
     
@@ -24,11 +47,19 @@ class CardsController < ApplicationController
 
   def search
     @query = params[:query]
-    @cards = if @query.present?
-               Kaminari.paginate_array(Card.where('name LIKE ?', "%#{@query}%")).page(params[:page]).per(20)
-             else
-               Kaminari.paginate_array(Card.all).page(params[:page]).per(20)
-             end
+    card_set_id = params[:card_set_id]
+
+    @cards = Card.all
+
+    if @query.present?
+      @cards = @cards.where('name LIKE ?', "%#{@query}%")
+    end
+
+    if card_set_id.present?
+      @cards = @cards.where(card_set_id: card_set_id)
+    end
+
+    @cards = Kaminari.paginate_array(@cards).page(params[:page]).per(20)
 
     respond_to do |format|
       format.html { render :index } # renders the default HTML view (index.html.erb)

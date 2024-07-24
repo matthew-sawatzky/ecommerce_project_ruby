@@ -1,3 +1,14 @@
+<h1>All Cards</h1>
+
+<details>
+  <summary>Shopping Cart</summary>
+  <ul>
+    <% @cart.each do |card| %>
+      <li><%= card.name %> - <%= link_to 'remove from cart', remove_from_cart_path(card), method: :delete %></li>
+    <% end %>
+  </ul>
+</details>
+
 <% if @cards.any? %>
   <div class="cards">
     <% @cards.each do |card| %>
@@ -13,6 +24,11 @@
         <% end %>
         
         <p><%= link_to 'Details', card_path(card) %></p>
+        <% if @cart.include?(Card) %>
+        <p><%= button_to 'remove from cart', remove_from_cart_path(card), method: :delete %></p>
+        <% else %>
+        <p><%= link_to 'Add to Cart', add_to_cart_path(card.id), method: :post %></p>
+        <% end %>
       </div>
     <% end %>
   </div>

@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::Base
-  before_action :set_card_sets
+  # before_action :set_card_sets
 
-  private
+  # private
 
-  def set_card_sets
-    @card_sets = CardSet.all
-  end
-  protect_from_forgery with: :exception
+  # def set_card_sets
+  #   @card_sets = CardSet.all
+  # end
+  # protect_from_forgery with: :exception
 
   def after_sign_in_path_for(resource)
     if resource.is_a?(AdminUser)

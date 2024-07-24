@@ -6,7 +6,7 @@
 
 <p><strong>Supertype:</strong> <%= @card['supertype'] %></p>
 <p><strong>Subtypes:</strong> <%= @card['subtype'] %></p>
-<p><strong>Set:</strong> <%= @card['name'] %></p>
+<p><strong>Set:</strong> <%= @card.card_set.name %></p>
 <p><strong>Rarity:</strong> <%= @card['rarity'] %></p>
 <p><strong>Price:</strong> $<%= @card['price'] %></p>
 

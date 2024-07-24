@@ -4,5 +4,5 @@ class Order < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :cards, through: :items
 
-  validates :order_total, presence: true
+validates :order_total, presence: true, numericality: { greater_than_or_equal_to: 0 }
 end

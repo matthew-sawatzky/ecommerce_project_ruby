@@ -1,5 +1,17 @@
 <h1>All Cards</h1>
 
+<%= form_with url: search_cards_path, method: :get, local: true do |form| %>
+  <div>
+    <%= form.label :query, "Search Cards" %>
+    <%= form.text_field :query %>
+  </div>
+  <div>
+    <%= form.label :card_set_id, "Select Set" %>
+    <%= form.collection_select :card_set_id, CardSet.all, :id, :name, include_blank: "All Sets" %>
+  </div>
+  <%= form.submit "Search" %>
+<% end %>
+
 <details>
   <summary>Shopping Cart</summary>
   <% if @cart.empty? %>
@@ -7,7 +19,14 @@
   <% else %>
     <ul>
       <% @cart.each do |card| %>
-        <li><%= card.name %> - <%= link_to 'remove from cart', remove_from_cart_path(card), method: :delete %></li>
+        <li>
+          <%= card.name %> - Quantity: <%= card.quantity %>
+          <%= form_with url: update_cart_item_path(card), method: :patch, local: true do |form| %>
+            <%= form.number_field :quantity, value: card.quantity, min: 1 %>
+            <%= form.submit 'Update Quantity' %>
+          <% end %>
+          <%= link_to 'Remove from cart', remove_from_cart_path(card), data: { 'turbo-method' => :delete } %>
+        </li>
       <% end %>
     </ul>
   <% end %>
@@ -28,10 +47,10 @@
         <% end %>
         
         <p><%= link_to 'Details', card_path(card) %></p>
-        <% if @cart.include?(card) %>
-          <p><%= button_to 'Remove from cart', remove_from_cart_path(card), method: :delete %></p>
+        <% if @cart.any? { |card| card.card_id == card.id } %>
+          <p><%= button_to 'Remove from cart', remove_from_cart_path(card), data: { 'turbo-method' => :delete } %></p>
         <% else %>
-          <p><%= link_to 'Add to Cart', add_to_cart_path(card.id), data: { turbo_method: :post } %></p>
+          <p><%= link_to 'Add to Cart', add_to_cart_path(card.id), data: { 'turbo-method' => :post } %></p>
         <% end %>
       </div>
     <% end %>

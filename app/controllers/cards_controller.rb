@@ -35,6 +35,16 @@ class CardsController < ApplicationController
     @cart = Card.find(session[:cart])
   end
 
+    def update_cart_item
+    @item = Item.find(params[:id])
+    
+    if @item.update(item_params)
+      redirect_to root_path, notice: 'Cart item updated successfully.'
+    else
+      redirect_to root_path, alert: 'Failed to update cart item.'
+    end
+  end
+
   def show
     @card = Card.find(params[:id])
 
@@ -44,15 +54,24 @@ class CardsController < ApplicationController
     end
   end
 
-  def search
+def search
     @query = params[:query]
     card_set_id = params[:card_set_id]
+    category_id = params[:category_id]
 
     @cards = Card.all
 
-    @cards = @cards.where("name LIKE ?", "%#{@query}%") if @query.present?
+    if @query.present?
+      @cards = @cards.where('name LIKE ?', "%#{@query}%")
+    end
 
-    @cards = @cards.where(card_set_id:) if card_set_id.present?
+    if card_set_id.present?
+      @cards = @cards.where(card_set_id: card_set_id)
+    end
+
+    if category_id.present?
+      @cards = @cards.where(category_id: category_id)
+    end
 
     @cards = Kaminari.paginate_array(@cards).page(params[:page]).per(20)
 

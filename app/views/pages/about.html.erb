@@ -1,4 +1,7 @@
 <!-- app/views/pages/about.html.erb -->
 <h1>About Us</h1>
-<p>Welcome to our Pokemon Card Shop! We are dedicated to providing the best selection of Pokemon cards and collectibles. Our team is passionate about Pokemon and strives to bring you the best products and service.</p>
-<p>Our mission is to create a community where Pokemon fans can come together to find the cards they love. We hope you enjoy exploring our collection and finding the perfect addition to your deck or collection.</p>
+<% if @static_page %>
+  <div><%= @static_page.content.html_safe %></div>
+<% else %>
+  <p>The About page content is not available.</p>
+<% end %>

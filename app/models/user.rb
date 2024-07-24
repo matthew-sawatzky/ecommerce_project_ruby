@@ -3,6 +3,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   def admin?
-    self.admin
+    admin
   end
 end

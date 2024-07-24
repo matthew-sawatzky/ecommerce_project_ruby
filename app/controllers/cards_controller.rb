@@ -2,7 +2,6 @@ class CardsController < ApplicationController
   before_action :initialize_session
   before_action :load_cart
   def index
-    
     if params[:card_set_id].present?
       card_set = CardSet.find(params[:card_set_id])
       @cards = Kaminari.paginate_array(card_set.cards).page(params[:page]).per(20)
@@ -16,17 +15,17 @@ class CardsController < ApplicationController
     end
   end
 
-def add_to_cart
-  id = params[:id].to_i
-  session[:cart] << id unless session[:cart].include?(id)
-  redirect_to root_path
-end
+  def add_to_cart
+    id = params[:id].to_i
+    session[:cart] << id unless session[:cart].include?(id)
+    redirect_to root_path
+  end
 
-def remove_from_cart
-  id = params[:id].to_i
-  session[:cart].delete(id)
-  redirect_to root_path
-end
+  def remove_from_cart
+    id = params[:id].to_i
+    session[:cart].delete(id)
+    redirect_to root_path
+  end
 
   def initialize_session
     session[:cart] ||= []
@@ -38,7 +37,7 @@ end
 
   def show
     @card = Card.find(params[:id])
-    
+
     respond_to do |format|
       format.html # renders the default HTML view (show.html.erb)
       format.json { render json: card_with_image_url(@card) }
@@ -51,13 +50,9 @@ end
 
     @cards = Card.all
 
-    if @query.present?
-      @cards = @cards.where('name LIKE ?', "%#{@query}%")
-    end
+    @cards = @cards.where("name LIKE ?", "%#{@query}%") if @query.present?
 
-    if card_set_id.present?
-      @cards = @cards.where(card_set_id: card_set_id)
-    end
+    @cards = @cards.where(card_set_id:) if card_set_id.present?
 
     @cards = Kaminari.paginate_array(@cards).page(params[:page]).per(20)
 
@@ -71,7 +66,7 @@ end
     @card = Card.new(card_params)
     if @card.save
       respond_to do |format|
-        format.html { redirect_to @card, notice: 'Card was successfully created.' }
+        format.html { redirect_to @card, notice: "Card was successfully created." }
         format.json { render json: card_with_image_url(@card), status: :created }
       end
     else
@@ -86,7 +81,7 @@ end
     @card = Card.find(params[:id])
     if @card.update(card_params)
       respond_to do |format|
-        format.html { redirect_to @card, notice: 'Card was successfully updated.' }
+        format.html { redirect_to @card, notice: "Card was successfully updated." }
         format.json { render json: card_with_image_url(@card) }
       end
     else
@@ -101,7 +96,7 @@ end
     @card = Card.find(params[:id])
     @card.destroy
     respond_to do |format|
-      format.html { redirect_to cards_url, notice: 'Card was successfully destroyed.' }
+      format.html { redirect_to cards_url, notice: "Card was successfully destroyed." }
       format.json { head :no_content }
     end
   end

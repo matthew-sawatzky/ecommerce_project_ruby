@@ -1,6 +1,6 @@
 class PokemonTcgApi
   include HTTParty
-  base_uri 'https://api.pokemontcg.io/v2'
+  base_uri "https://api.pokemontcg.io/v2"
 
   def initialize(api_key)
     @headers = {
@@ -9,8 +9,8 @@ class PokemonTcgApi
   end
 
   def fetch_cards(query = {})
-    options = { headers: @headers, query: query }
-    self.class.get('/cards', options)
+    options = { headers: @headers, query: }
+    self.class.get("/cards", options)
   end
 
   def fetch_card(card_id)
@@ -20,6 +20,6 @@ class PokemonTcgApi
 
   def fetch_sets
     options = { headers: @headers }
-    self.class.get('/sets', options)
+    self.class.get("/sets", options)
   end
 end

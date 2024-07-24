@@ -2,11 +2,15 @@
 
 <details>
   <summary>Shopping Cart</summary>
-  <ul>
-    <% @cart.each do |card| %>
-      <li><%= card.name %> - <%= link_to 'remove from cart', remove_from_cart_path(card), method: :delete %></li>
-    <% end %>
-  </ul>
+  <% if @cart.empty? %>
+    <p>No items in cart.</p>
+  <% else %>
+    <ul>
+      <% @cart.each do |card| %>
+        <li><%= card.name %> - <%= link_to 'remove from cart', remove_from_cart_path(card), method: :delete %></li>
+      <% end %>
+    </ul>
+  <% end %>
 </details>
 
 <% if @cards.any? %>
@@ -24,10 +28,10 @@
         <% end %>
         
         <p><%= link_to 'Details', card_path(card) %></p>
-        <% if @cart.include?(Card) %>
-        <p><%= button_to 'remove from cart', remove_from_cart_path(card), method: :delete %></p>
+        <% if @cart.include?(card) %>
+          <p><%= button_to 'Remove from cart', remove_from_cart_path(card), method: :delete %></p>
         <% else %>
-        <p><%= link_to 'Add to Cart', add_to_cart_path(card.id), method: :post %></p>
+          <p><%= link_to 'Add to Cart', add_to_cart_path(card.id), data: { turbo_method: :post } %></p>
         <% end %>
       </div>
     <% end %>

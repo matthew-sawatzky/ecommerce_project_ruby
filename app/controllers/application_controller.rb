@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
-    before_action :set_card_sets
+  before_action :set_card_sets
 
-        private
+  private
 
   def set_card_sets
     @card_sets = CardSet.all

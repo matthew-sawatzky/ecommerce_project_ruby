@@ -32,7 +32,7 @@ class CardsController < ApplicationController
   end
 
   def load_cart
-    @cart = Card.find(session[:cart])
+  @cart = Item.where(id: session[:cart])
   end
 
     def update_cart_item

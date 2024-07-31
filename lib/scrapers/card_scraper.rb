@@ -27,8 +27,8 @@ class CardScraper
       # Append the data to the list
       cards << {
         "name" => name,
-        'image_url' => image_url,
-        'price' => price
+        "image_url" => image_url,
+        "price" => price
       }
     end
 

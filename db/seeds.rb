@@ -10,10 +10,6 @@ if response.success?
   # Create Card Sets first
   all_card_sets.each do |set_data|
     CardSet.find_or_create_by(name: set_data["name"], series: set_data["series"])
-  end
-
-  # Fetch cards for each set and create them
-  all_card_sets.each do |set_data|
     set_id = set_data["id"]
     card_response = api.fetch_cards_by_set(set_id)
 

@@ -1,30 +1,20 @@
 # lib/scrapers/card_scraper.rb
 
-require 'nokogiri'
-require 'httparty'
-require 'csv'
+require "nokogiri"
+require "httparty"
+require "csv"
 
 class CardScraper
   def perform
-    # URL of the website to scrape
-    url = 'https://example.com/cards'
-
-    # Send a GET request to the website
+    url = "https://example.com/cards"
     response = HTTParty.get(url)
-
-    # Parse the HTML content
     doc = Nokogiri::HTML(response.body)
-
-    # Initialize an array to store the scraped data
     cards = []
 
-    # Find and extract the data
-    doc.css('.card').each do |card_div|
-      name = card_div.at_css('h2')&.text
-      image_url = card_div.at_css('img')['src'] rescue nil
-      price = card_div.at_css('.price')&.text
-
-      # Append the data to the list
+    doc.css(".card").each do |card_div|
+      name = card_div.at_css("h2")&.text
+      image_url = card_div.at_css("img")["src"] rescue nil
+      price = card_div.at_css(".price")&.text
       cards << {
         "name" => name,
         "image_url" => image_url,
@@ -32,16 +22,15 @@ class CardScraper
       }
     end
 
-    # Print the scraped data to the console
     cards.each do |card|
-      puts "Name: #{card["name"]}"
-      puts "Image URL: #{card["image_url"]}"
-      puts "Price: #{card["price"]}"
+      puts "Name: #{card['name']}"
+      puts "Image URL: #{card['image_url']}"
+      puts "Price: #{card['price']}"
       puts "-" * 40
     end
 
     CSV.open("cards.csv", "w") do |csv|
-      csv << ['Name', 'Image URL', 'Price']
+      csv << ["Name", "Image URL", "Price"]
       cards.each do |card|
         csv << [card["name"], card["image_url"], card["price"]]
       end

@@ -26,6 +26,11 @@
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
+  <div class="field">
+    <%= f.label :province %><br />
+    <%= f.select :province, options_for_select(['Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 'Nova Scotia', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan'], selected: f.object.province) %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

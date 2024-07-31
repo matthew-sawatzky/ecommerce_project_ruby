@@ -1,5 +1,5 @@
 class CardsController < ApplicationController
-  before_action :authenticate_user!, only: [:add_to_cart, :remove_from_cart, :update_cart_item]
+  before_action :authenticate_user!
 
   def index
     @cards = Card.all.page(params[:page])
@@ -53,5 +53,6 @@ class CardsController < ApplicationController
     else
       redirect_to root_path, alert: "Failed to update item quantity."
     end
+  end
   end
 end

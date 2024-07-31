@@ -1,0 +1,32 @@
+<h1>Checkout</h1>
+
+<% if @orders.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Items</th>
+        <th>Total Price</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.id %></td>
+          <td>
+            <ul>
+              <% order.items.each do |item| %>
+                <li><%= item.card.name %> (Quantity: <%= item.quantity %>)</li>
+              <% end %>
+            </ul>
+          </td>
+          <td><%= number_to_currency(order.order_total) %></td>
+          <td><%= order.order_status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No orders found.</p>
+<% end %>

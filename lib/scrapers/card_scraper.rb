@@ -11,22 +11,24 @@ class CardScraper
     doc = Nokogiri::HTML(response.body)
     cards = []
 
-    doc.css(".card").each do |card_div|
-      name = card_div.at_css("h2")&.text
-      image_url = card_div.at_css("img")["src"] rescue nil
-      price = card_div.at_css(".price")&.text
-      cards << {
-        "name" => name,
-        "image_url" => image_url,
-        "price" => price
+  doc.css(".card").each do |card_div|
+    name = card_div.at_css("h2")&.text
+    image_url = card_div.at_css("img")["src"] rescue nil
+    price = card_div.at_css(".price")&.text
+    cards <<
+      {
+        "name"     => name,
+        "price"    => price,
+        "quantity" => quantity
       }
-    end
+  end
+
 
     cards.each do |card|
-      puts "Name: #{card['name']}"
-      puts "Image URL: #{card['image_url']}"
-      puts "Price: #{card['price']}"
-      puts "-" * 40
+      Rails.logger.info "Name: #{card['name']}"
+      Rails.logger.info "Image URL: #{card['image_url']}"
+      Rails.logger.info "Price: #{card['price']}"
+      Rails.logger.info "-" * 40
     end
 
     CSV.open("cards.csv", "w") do |csv|

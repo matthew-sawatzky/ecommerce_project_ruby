@@ -37,7 +37,7 @@ if response.success?
     end
   end
 else
-  puts "Failed to fetch the sets from the Pokemon TCG API."
+  Rails.logger.info "Failed to fetch the sets from the Pokemon TCG API."
 end
 
 # Seed admin user

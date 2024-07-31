@@ -23,13 +23,17 @@ class CardsController < ApplicationController
     card = Card.find(params[:id])
     user_id = current_user.id
 
-    active_order = Order.find_or_create_by(order_status: 1, user_id: user_id)
+    active_order = Order.find_or_create_by(order_status: 1, user_id: user_id) do |order|
+    order.order_total = card.price
+    end
 
     item = Item.create(
       card_id: card.id,
       order_id: active_order.id,
       quantity: 1
     )
+
+    
 
     session[:cart] ||= []
     session[:cart] << item.id unless session[:cart].include?(item.id)

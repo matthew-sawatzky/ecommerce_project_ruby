@@ -20,19 +20,21 @@
     <ul>
       <% @cart.each do |item| %>
         <li>
-          <%= item.name %> - Quantity: <%= item.quantity %>
-          <%= form_with url: update_cart_item_path(item), method: :patch, local: true do |form| %>
-            <%= form.number_field :quantity, value: card.quantity, min: 1 %>
+          <%= item.card.name %> - Quantity: <%= item.quantity %>
+          <%= form_with url: update_cart_item_card_path(item), method: :patch, local: true do |form| %>
+            <%= form.number_field :quantity, value: item.quantity, min: 1 %>
             <%= form.submit 'Update Quantity' %>
           <% end %>
-          <%= link_to 'Remove from cart', remove_from_cart_path(item), data: { 'turbo-method' => :delete } %>
+          <%= link_to 'Remove from cart', remove_from_cart_card_path(item), data: { 'turbo-method' => :delete } %>
         </li>
       <% end %>
+            <li><%= link_to 'Checkout', checkout_path %></li>
+
     </ul>
   <% end %>
 </details>
 
-<% if false %>
+<% if @cards.any? %>
   <div class="cards">
     <% @cards.each do |card| %>
       <div class="card">
@@ -47,8 +49,8 @@
         <% end %>
         
         <p><%= link_to 'Details', card_path(card) %></p>
-        <% if @cart.any? { |card| card.card_id == card.id } %>
-          <p><%= button_to 'Remove from cart', remove_from_cart_path(card), data: { 'turbo-method' => :delete } %></p>
+        <% if @cart.any? { |item| item.card_id == card.id } %>
+          <p><%= button_to 'Remove from cart', remove_from_cart_card_path(card), data: { 'turbo-method' => :delete } %></p>
         <% else %>
           <p><%= button_to 'Add to Cart', add_to_cart_card_path(card), data: { 'turbo-method' => :post } %></p>
         <% end %>

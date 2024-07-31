@@ -7,11 +7,16 @@
         <th>Order ID</th>
         <th>Items</th>
         <th>Total Price</th>
+        <th>Provincial Tax</th>
+        <th>Federal Tax</th>
+        <th>Tax Type</th>
+        <th>Total Tax</th>
         <th>Status</th>
       </tr>
     </thead>
     <tbody>
       <% @orders.each do |order| %>
+        <% tax_details = order.tax_details %>
         <tr>
           <td><%= order.id %></td>
           <td>
@@ -22,6 +27,10 @@
             </ul>
           </td>
           <td><%= number_to_currency(order.order_total) %></td>
+          <td><%= number_to_currency(order.order_total * tax_details[:provincial_tax] / 100.0) %></td>
+          <td><%= number_to_currency(order.order_total * tax_details[:federal_tax] / 100.0) %></td>
+          <td><%= tax_details[:tax_type] %></td>
+          <td><%= number_to_currency(order.total_tax) %></td>
           <td><%= order.order_status %></td>
         </tr>
       <% end %>

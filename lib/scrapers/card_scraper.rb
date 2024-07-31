@@ -26,7 +26,7 @@ class CardScraper
 
       # Append the data to the list
       cards << {
-        'name' => name,
+        "name" => name,
         'image_url' => image_url,
         'price' => price
       }
@@ -34,19 +34,17 @@ class CardScraper
 
     # Print the scraped data to the console
     cards.each do |card|
-      puts "Name: #{card['name']}"
-      puts "Image URL: #{card['image_url']}"
-      puts "Price: #{card['price']}"
-      puts '-' * 40
+      puts "Name: #{card["name"]}"
+      puts "Image URL: #{card["image_url"]}"
+      puts "Price: #{card["price"]}"
+      puts "-" * 40
     end
 
-    CSV.open('cards.csv', 'w') do |csv|
+    CSV.open("cards.csv", "w") do |csv|
       csv << ['Name', 'Image URL', 'Price']
       cards.each do |card|
-        csv << [card['name'], card['image_url'], card['price']]
+        csv << [card["name"], card["image_url"], card["price"]]
       end
     end
-
-    puts "Scraping completed and data saved to cards.csv"
   end
 end

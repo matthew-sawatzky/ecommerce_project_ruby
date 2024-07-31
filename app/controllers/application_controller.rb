@@ -27,7 +27,8 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def load_cart
+  
+  def load_cart
     if user_signed_in?
       active_order = Order.find_by(order_status: 1, user_id: current_user.id)
       @cart = active_order ? active_order.items : []

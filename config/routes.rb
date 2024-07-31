@@ -1,18 +1,20 @@
-# config/routes.rb
 Rails.application.routes.draw do
-  get 'static_pages/show'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
   devise_for :users
+  
   root "pages#home"
-  get 'pages/about'
-  get 'about', to: 'pages#about', as: 'about'
-  post 'cards/add_to_cart/:id', to: 'cards#add_to_cart', as: 'add_to_cart'
-  delete 'cards/remove_from_cart/:id', to: 'cards#remove_from_cart', as: 'remove_from_cart'
-    patch 'cart_items/:id', to: 'cards#update_cart_item', as: 'update_cart_item'
+  
+  get 'pages/about', as: 'about'
   resources :static_pages, only: [:show], param: :title
-  resources :cards, only: [:index, :show, :search] do
+
+  resources :cards, only: [:index, :show] do
+    member do
+      post 'add_to_cart'
+      delete 'remove_from_cart'
+      patch 'update_cart_item'
+    end
     collection do
       get 'search'
     end

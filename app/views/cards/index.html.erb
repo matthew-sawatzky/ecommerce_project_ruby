@@ -50,7 +50,7 @@
         <% if @cart.any? { |card| card.card_id == card.id } %>
           <p><%= button_to 'Remove from cart', remove_from_cart_path(card), data: { 'turbo-method' => :delete } %></p>
         <% else %>
-          <p><%= link_to 'Add to Cart', add_to_cart_path(card.id), data: { 'turbo-method' => :post } %></p>
+          <p><%= button_to 'Add to Cart', add_to_cart_card_path(card), method: :post %></p>
         <% end %>
       </div>
     <% end %>

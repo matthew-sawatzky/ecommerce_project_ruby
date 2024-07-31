@@ -40,9 +40,8 @@ class CardScraper
       puts '-' * 40
     end
 
-    # Save the scraped data to a CSV file
     CSV.open('cards.csv', 'w') do |csv|
-      csv << ['Name', 'Image URL', 'Price'] # CSV header
+      csv << ['Name', 'Image URL', 'Price']
       cards.each do |card|
         csv << [card['name'], card['image_url'], card['price']]
       end

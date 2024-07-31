@@ -1,11 +1,9 @@
 class PagesController < ApplicationController
-  def about
-    @static_page = StaticPage.find_by(title: 'About')
-    if @static_page.nil?
-      redirect_to root_path, alert: "About page not found."
-    end
-  end
-  def home
-    # Code for the home action
+  def show
+    @static_page = StaticPage.find_by(title: params[:title])
+    return unless @static_page.nil?
+
+    render file: "#{Rails.root}/public/404.html", status: :not_found
+    render :show
   end
 end

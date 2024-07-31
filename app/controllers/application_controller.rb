@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    attributes = [:username, :email, :province_id]
+    attributes = %i[username email province_id]
     devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
     devise_parameter_sanitizer.permit(:account_update, keys: attributes)
   end
@@ -27,7 +27,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
   def load_cart
     if user_signed_in?
       active_order = Order.find_by(order_status: 1, user_id: current_user.id)

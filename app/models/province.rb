@@ -1,5 +1,5 @@
 class Province < ApplicationRecord
-  has_many :users
+  has_many :users, dependent: :nullify
 
   validates :province_name, presence: true, uniqueness: true
   validates :tax_type, presence: true

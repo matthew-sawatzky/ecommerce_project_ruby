@@ -1,6 +1,6 @@
-require 'net/http'
-require 'uri'
-require 'stringio'
+require "net/http"
+require "uri"
+require "stringio"
 
 def download_image(url)
   uri = URI.parse(url)
@@ -61,17 +61,17 @@ if Rails.env.development?
 end
 
 Province.create!([
-                   { province_name: "Alberta", provincial_tax: 0, federal_tax: 5, tax_type: "gst" },
-                   { province_name: "British Columbia", provincial_tax: 7, federal_tax: 5, tax_type: "pst" },
-                   { province_name: "Manitoba", provincial_tax: 7, federal_tax: 5, tax_type: "pst" },
-                   { province_name: "New Brunswick", provincial_tax: 10, federal_tax: 5, tax_type: "hst" },
-                   { province_name: "Newfoundland and Labrador", provincial_tax: 10, federal_tax: 5, tax_type: "hst" },
-                   { province_name: "Northwest Territories", provincial_tax: 0, federal_tax: 5, tax_type: "gst" },
-                   { province_name: "Nova Scotia", provincial_tax: 10, federal_tax: 5, tax_type: "hst" },
-                   { province_name: "Nunavut", provincial_tax: 0, federal_tax: 5, tax_type: "gst" },
-                   { province_name: "Ontario", provincial_tax: 8, federal_tax: 5, tax_type: "hst" },
-                   { province_name: "Prince Edward Island", provincial_tax: 10, federal_tax: 5, tax_type: "hst" },
-                   { province_name: "Quebec", provincial_tax: 9.975, federal_tax: 5, tax_type: "qst" },
-                   { province_name: "Saskatchewan", provincial_tax: 6, federal_tax: 5, tax_type: "pst" },
-                   { province_name: "Yukon", provincial_tax: 0, federal_tax: 5, tax_type: "gst" }
-                 ])
+  { province_name: "Alberta", provincial_tax: 0, federal_tax: 5, tax_type: "gst" },
+  { province_name: "British Columbia", provincial_tax: 7, federal_tax: 5, tax_type: "pst" },
+  { province_name: "Manitoba", provincial_tax: 7, federal_tax: 5, tax_type: "pst" },
+  { province_name: "New Brunswick", provincial_tax: 10, federal_tax: 5, tax_type: "hst" },
+  { province_name: "Newfoundland and Labrador", provincial_tax: 10, federal_tax: 5, tax_type: "hst" },
+  { province_name: "Northwest Territories", provincial_tax: 0, federal_tax: 5, tax_type: "gst" },
+  { province_name: "Nova Scotia", provincial_tax: 10, federal_tax: 5, tax_type: "hst" },
+  { province_name: "Nunavut", provincial_tax: 0, federal_tax: 5, tax_type: "gst" },
+  { province_name: "Ontario", provincial_tax: 8, federal_tax: 5, tax_type: "hst" },
+  { province_name: "Prince Edward Island", provincial_tax: 10, federal_tax: 5, tax_type: "hst" },
+  { province_name: "Quebec", provincial_tax: 9.975, federal_tax: 5, tax_type: "qst" },
+  { province_name: "Saskatchewan", provincial_tax: 6, federal_tax: 5, tax_type: "pst" },
+  { province_name: "Yukon", provincial_tax: 0, federal_tax: 5, tax_type: "gst" }
+])

@@ -13,29 +13,23 @@ class CardsController < ApplicationController
     @query = params[:query]
     @card_set_id = params[:card_set_id]
     @cards = Card.all
-    @cards = @cards.where("name ILIKE ? OR description ILIKE ?", "%#{@query}%", "%#{@query}%")
+
     if @query.present?
-      @cards = @cards.where(card_set_id: @card_set_id)
-    if @card_set_id.present? && @card_set_id != ""
-      @cards = @cards.page(params[:page])
+      @cards = @cards.where("name ILIKE ? OR description ILIKE ?", "%#{@query}%", "%#{@query}%")
+    end
+
+    return unless @card_set_id.present? && @card_set_id != ""
+
+    @cards = @cards.where(card_set_id: @card_set_id).page(params[:page])
   end
 
   def add_to_cart
     card = Card.find(params[:id])
-    user_id = current_user.id
-
-    active_order = Order.find_or_create_by(order_status: 1, user_id:) do |order|
-    order.order_total = card.price
-  end
-
-    item = Item.create(
-      card_id: card.id,
-      order_id: active_order.id,
-      quantity: 1
-    )
+    active_order = find_or_create_order
+    create_item(card, active_order)
 
     session[:cart] ||= []
-    session[:cart] << item.id unless session[:cart].include?(item.id)
+    session[:cart] << card.id unless session[:cart].include?(card.id)
 
     redirect_to root_path, notice: "Item added to cart."
   end
@@ -55,6 +49,20 @@ class CardsController < ApplicationController
       redirect_to root_path, alert: "Failed to update item quantity."
     end
   end
+
+  private
+
+  def find_or_create_order
+    Order.find_or_create_by(order_status: 1, user_id: current_user.id) do |order|
+      order.order_total = card.price
+    end
   end
-end
+
+  def create_item(card, order)
+    Item.create(
+      card_id: card.id,
+      order_id: order.id,
+      quantity: 1
+    )
+  end
 end

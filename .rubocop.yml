@@ -62,3 +62,6 @@ Lint/UnusedMethodArgument:
 
 Rails/HasAndBelongsToMany:
   Enabled: false
+
+  Style/AlignHash:
+  Enabled: false

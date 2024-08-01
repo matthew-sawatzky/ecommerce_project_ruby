@@ -4,13 +4,15 @@ class Order < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :cards, through: :items
 
-validates :order_total, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :order_total, presence: true, 
+  numericality: { greater_than_or_equal_to: 0 }
+
   def tax_details
     province = user.province
     {
-      provincial_tax: province.provincial_tax,
-      federal_tax: province.federal_tax,
-      tax_type: province.tax_type,
+    provincial_tax: province.provincial_tax,
+    federal_tax: province.federal_tax,
+    tax_type: province.tax_type,
     }
   end
 

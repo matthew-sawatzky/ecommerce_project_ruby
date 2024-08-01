@@ -11,18 +11,17 @@ class CardScraper
     doc = Nokogiri::HTML(response.body)
     cards = []
 
-  doc.css(".card").each do |card_div|
-    name = card_div.at_css("h2")&.text
-    image_url = card_div.at_css("img")["src"] rescue nil
-    price = card_div.at_css(".price")&.text
-    cards <<
-      {
-        "name"     => name,
-        "price"    => price,
-        "quantity" => quantity
-      }
-  end
-
+    doc.css(".card").each do |card_div|
+      name = card_div.at_css("h2")&.text
+      image_url = card_div.at_css("img")["src"] rescue nil
+      price = card_div.at_css(".price")&.text
+      cards <<
+        {
+          "name"     => name,
+          "price"    => price,
+          "quantity" => quantity
+        }
+    end
 
     cards.each do |card|
       Rails.logger.info "Name: #{card['name']}"

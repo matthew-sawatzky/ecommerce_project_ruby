@@ -11,12 +11,13 @@ class CardsController < ApplicationController
 
   def search
     @query = params[:query]
-    @card_set_id = params[:card_set_id]    
+    @card_set_id = params[:card_set_id]
     @cards = Card.all
-    @cards = @cards.where("name ILIKE ? OR description ILIKE ?", "%#{@query}%", "%#{@query}%") if @query.present?
-    @cards = @cards.where(card_set_id: @card_set_id) 
+    @cards = @cards.where("name ILIKE ? OR description ILIKE ?", "%#{@query}%", "%#{@query}%")
+    if @query.present?
+      @cards = @cards.where(card_set_id: @card_set_id)
     if @card_set_id.present? && @card_set_id != ""
-    @cards = @cards.page(params[:page])
+      @cards = @cards.page(params[:page])
   end
 
   def add_to_cart
@@ -55,4 +56,5 @@ class CardsController < ApplicationController
     end
   end
   end
+end
 end

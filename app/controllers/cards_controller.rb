@@ -37,7 +37,7 @@ class CardsController < ApplicationController
   def remove_from_cart
     item = Item.find(params[:id])
     item.destroy
-    session[:cart].delete(item.id)
+    session[:cart].remove_from_cart(item.id)
     redirect_to root_path, notice: "Item removed from cart."
   end
 

@@ -25,7 +25,7 @@ class CardsController < ApplicationController
 
   def add_to_cart
     card = Card.find(params[:id])
-    active_order = find_or_create_order
+    active_order = find_or_create_order(card)
     create_item(card, active_order)
 
     session[:cart] ||= []
@@ -52,7 +52,7 @@ class CardsController < ApplicationController
 
   private
 
-  def find_or_create_order
+  def find_or_create_order(card)
     Order.find_or_create_by(order_status: 1, user_id: current_user.id) do |order|
       order.order_total = card.price
     end

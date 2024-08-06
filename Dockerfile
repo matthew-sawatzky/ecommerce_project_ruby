@@ -1,5 +1,5 @@
 # Use an official Ruby runtime as a parent image
-FROM ruby:3.3.0
+FROM ruby:3.3.0-bullseye
 
 # Install dependencies
 RUN apt-get update -qq && \
